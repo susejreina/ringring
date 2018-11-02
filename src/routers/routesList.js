@@ -27,7 +27,7 @@ class RoutesList extends Component {
             <Link to="/pages/sendmsg"><span className="material-icons">border_color</span>Send SMS</Link>
           </li>
           <li>
-            <Link to="/table/user-tables"><span className="material-icons">folder</span>SMS Report</Link>
+            <Link to="/table/report-sms"><span className="material-icons">folder</span>SMS Report</Link>
           </li>
           <li>
             <Link to="/other-pages/login"><span className="material-icons">equalizer</span>User Administrador</Link>
