@@ -27,6 +27,7 @@ import AreaCharts from '../pages/areaChart.js';
 import PieCharts from '../pages/pieChart.js';
 import OtherCharts from '../pages/otherCharts.js';
 import BootstrapTables from '../pages/bootstrapTables.js';
+import ReportSms from '../pages/reportSMS.js';
 import UserTables from '../pages/userTables.js';
 import EcommerceDashboard from '../pages/ecommerceDashboard.js';
 import EcommerceProductsPage from '../pages/products.js';
@@ -76,6 +77,7 @@ class RoutesComponent extends Component {
         <Route path="/charts/pie-charts" component={PieCharts}/>
         <Route path="/charts/other-charts" component={OtherCharts}/>
         <Route path="/table/bootstrap-tables" component={BootstrapTables}/>
+        <Route path="/table/report-sms" component={ReportSms}/>
         <Route path="/table/user-tables" component={UserTables}/>
         <Route path="/ecommerce/dashboard" component={EcommerceDashboard}/>
         <Route path="/ecommerce/products" component={EcommerceProductsPage}/>

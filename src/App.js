@@ -3,12 +3,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SidebarMenuRouters from './routers/routers.js';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-
 import './static/css/App.css';
 import './static/css/vendor-styles.css';
 
 import Header from './containers/header.js';
 
+import "react-table/react-table.css";
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -18,7 +18,6 @@ const muiTheme = getMuiTheme({
 });
 
 class App extends Component {
-
   render() {
     return (
       <div>

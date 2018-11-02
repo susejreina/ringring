@@ -4,7 +4,8 @@ import ReportsSMS from '../components/tables/reportSMS.js';
 
 const ReportSms = () => (
   <div>
-    <Panel title="Report SMS">
+  <h3>SMS REPORT</h3>
+    <Panel title="Lists messages">
       <ReportsSMS striped={true}/>
     </Panel>
   </div>

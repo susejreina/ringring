@@ -1,50 +1,91 @@
 import React, {Component} from 'react';
-import classNames from 'classnames';
+import ReactTable from "react-table";
+import { makeData } from "./Utils";
+import matchSorter from 'match-sorter';
 
 class ReportsSMS extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: makeData()
+    };
+  }
+
   render() {
-    const tableClass = classNames({
-      'table': true,
-      'table-striped': this.props.striped,
-      //'table-bordered': this.props.bordered,
-      //'table-hover': this.props.hover,
-      //'table-condensed': this.props.condensed
-    });
+    const { data } = this.state;
     return (
-      <table className={tableClass}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>Recipient Number</th>
-            <th>Status</th>
-            <th>Message</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
+      <ReactTable
+          data={data}
+          filterable
+          defaultFilterMethod={(filter, row) =>
+            String(row[filter.id]) === filter.value}
+          columns={[
+            {
+              columns: [
+                {
+                  Header: "#",
+                  accessor: "nro",
+                  maxWidth: 100,
+                  filterable: false,
+                  Cell: (row) => {
+                    return <div>{row.index+1}</div>;
+                  }
+                },
+                {
+                  Header: "date",
+                  accessor: "date",
+                  filterMethod: (filter, row) =>
+                    row[filter.id].startsWith(filter.value) &&
+                    row[filter.id].endsWith(filter.value)
+                },
+                {
+                  Header: "Recipient number",
+                  id: "recipientNumber",
+                  accessor: d => d.recipientNumber,
+                  filterMethod: (filter, rows) =>
+                    matchSorter(rows, filter.value, { keys: ["recipientNumber"] }),
+                  filterAll: true
+                },
+                {
+                  Header: "Message",
+                  id: "message",
+                  accessor: d => d.message,
+                  filterMethod: (filter, rows) =>
+                    matchSorter(rows, filter.value, { keys: ["message"] }),
+                  filterAll: true
+                }
+              ]
+            },
+            {
+              columns: [
+                {
+                  Header: "Status SMS",
+                  accessor: "state",
+                  id: "sts",
+                  Cell: ({ value }) => (value >= 'S' ? "Send" : (value >= 'P' ? "Pending" : (value >= 'F' ? "Failed" : ""))),
+                  filterMethod: (filter, row) => {
+                    if (filter.value === "all") {
+                      return true;
+                    }
+                  },
+                  Filter: ({ filter, onChange }) =>
+                    <select
+                      onChange={event => onChange(event.target.value)}
+                      style={{ width: "100%" }}
+                      value={filter ? filter.value : "all"}
+                    >
+                      <option value="all">Show All</option>
+                      <option value="S">Send</option>
+                      <option value="P">Pending</option>
+                      <option value="F">Failed</option>
+                    </select>
+                }
+              ]
+            }
+          ]}
+          defaultPageSize={10}
+          className="-striped -highlight"
+        />
     );
   }
 }
