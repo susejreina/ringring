@@ -1,18 +1,48 @@
 import React, {Component} from 'react';
 import ReactTable from "react-table";
-import { makeData } from "./Utils";
+//import { makeData } from "./Utils";
 import matchSorter from 'match-sorter';
 
 class ReportsSMS extends Component {
-  constructor() {
-    super();
-    this.state = {
-      data: makeData()
-    };
-  }
 
   render() {
-    const { data } = this.state;
+    const data = [{
+      date: "2018-10-14",
+      recipientNumber: "444444333333",
+      message: "text example",
+      status: "S"
+    }, {
+      date: "2018-10-12",
+      recipientNumber: "1111222223333",
+      message: "text message",
+      status: "P"
+    }, {
+      date: "2018-10-10",
+      recipientNumber: "222444666888",
+      message: "example",
+      status: "F"
+    }, {
+      date: "2018-10-11",
+      recipientNumber: "112233445566",
+      message: "react table",
+      status: "F"
+    }, {
+      date: "2018-10-12",
+      recipientNumber: "222444666888",
+      message: "table test",
+      status: "P"
+    }, {
+      date: "2018-10-11",
+      recipientNumber: "222444666888",
+      message: "prefer chocolate",
+      status: "F"
+    }, {
+      date: "2018-10-12",
+      recipientNumber: "112233445566",
+      message: "princess",
+      status: "S"
+    }];
+
     return (
       <ReactTable
           data={data}
@@ -32,10 +62,10 @@ class ReportsSMS extends Component {
                   }
                 },
                 {
-                  Header: "date",
+                  Header: "Date",
                   accessor: "date",
+                  hintText: "Ends with",
                   filterMethod: (filter, row) =>
-                    row[filter.id].startsWith(filter.value) &&
                     row[filter.id].endsWith(filter.value)
                 },
                 {
@@ -60,13 +90,21 @@ class ReportsSMS extends Component {
               columns: [
                 {
                   Header: "Status SMS",
-                  accessor: "state",
-                  id: "sts",
+                  accessor: "status",
+                  id: "status",
                   Cell: ({ value }) => (value >= 'S' ? "Send" : (value >= 'P' ? "Pending" : (value >= 'F' ? "Failed" : ""))),
                   filterMethod: (filter, row) => {
                     if (filter.value === "all") {
                       return true;
                     }
+                    else if (filter.value === "S") {
+                      return row[filter.id] === "S";
+                    }
+                    else if (filter.value === "P") {
+                      return row[filter.id] === "P";
+                    }
+                    else
+                      return row[filter.id] === "F";
                   },
                   Filter: ({ filter, onChange }) =>
                     <select
