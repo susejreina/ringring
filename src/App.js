@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import './static/css/App.css';
 import './static/css/vendor-styles.css';
 
-import Header from './containers/header.js';
+import LoginPage from './pages/login.js';
 
 import "react-table/react-table.css";
 
@@ -23,8 +23,7 @@ class App extends Component {
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <div>
-            <Header />
-            <SidebarMenuRouters />
+            <LoginPage />
           </div>
         </MuiThemeProvider>
       </div>
