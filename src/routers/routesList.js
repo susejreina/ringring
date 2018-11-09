@@ -29,10 +29,14 @@ class RoutesList extends Component {
           <li>
             <Link to="/table/report-sms"><span className="material-icons">folder</span>SMS Report</Link>
           </li>
-          <li>
-            <Link to="/other-pages/login"><span className="material-icons">equalizer</span>User Administrador</Link>
+          <li className="has-child">
+            <a href=""><span className="material-icons">equalizer</span>User Administrador</a>
+            <ul className="child-menu">
+              <li><Link to="/pages/masterUser">Master User</Link></li>
+              <li><Link to="/pages/client">Clients</Link></li>
+              <li><Link to="/pages/operators">Operators</Link></li>
+            </ul>
           </li>
-
         </ul>
       </div>
 

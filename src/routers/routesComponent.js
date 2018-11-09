@@ -36,6 +36,9 @@ import About from '../pages/about.js';
 import ServicePage from '../pages/services.js';
 import Contact from '../pages/contact.js';
 import Sendmsg from '../pages/sendmsg.js';
+import MasterUser from '../pages/masterUser.js';
+import ClientUser from '../pages/clientUser.js';
+import OperatorsUser from '../pages/operatorUser.js';
 import BlogPage from '../pages/blog.js';
 import Prices from '../pages/price.js';
 import FaqPage from '../pages/faqPage.js';
@@ -86,6 +89,9 @@ class RoutesComponent extends Component {
         <Route path="/pages/services" component={ServicePage}/>
         <Route path="/pages/contact" component={Contact}/>
         <Route path="/pages/sendmsg" component={Sendmsg}/>
+        <Route path="/pages/masterUser" component={MasterUser}/>
+        <Route path="/pages/client" component={ClientUser}/>
+        <Route path="/pages/operators" component={OperatorsUser}/>
         <Route path="/pages/blog" component={BlogPage}/>
         <Route path="/pages/pricing-table" component={Prices}/>
         <Route path="/pages/faq" component={FaqPage}/>
