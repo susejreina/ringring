@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { PostData } from '../../services/PostData';
+//import { PostData } from '../../services/PostData';
 import {Redirect} from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -43,44 +43,27 @@ class Login extends Component {
 
   componentDidMount() {
     fetch('http://localhost:3001/api/users',{
+      method: 'POST',
       mode: 'no-cors',
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-            email: "hugh.daniel@gmail.com",
-            name: "Hugh Daniel",
-            password: "1234"
-        })
-    }).
-    then((Response)=>Response.json()).
-    then((findresponse)=>{
-      console.log(findresponse);
     })
-    /*fetch('http://localhost:3001/api/users')
-     .then(results => {
-       return results.json();
-     })
-     .then((data) => {
-        this.setState({name: name});
-        console.log("state", this.state.name);
-      });*/
-
-    /* fetch('http://localhost:3001/api/users',{
-      method: 'POST',
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-    .then(response => {return response.json()})
-    .then(data => this.setState({ data }))
-    .catch(function(error) {
-        console.log(error);
-    }); */
+    .then(
+      function(response) {
+        console.log(response);
+        if (response.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +
+            response.status);
+          return;
+        }
+  
+        // Examine the text in the response
+        response.json().then(function(data) {
+          console.log(data);
+        });
+      }
+    )
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });  
   }
 
   /* signIn() {
