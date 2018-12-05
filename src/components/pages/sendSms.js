@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import imageUrl from '../../img/banner.jpg';
+// import imageUrl from '../../img/banner.jpg';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import SelectField from 'material-ui/SelectField';
@@ -7,11 +7,11 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
 
-const style = {
+/* const style = {
   backgroundImage: 'url('+ imageUrl + ')',
   backgroundSize: 'cover',
   backgroundPosition: 'center center',
-}
+} */
 const styles = {
   radioButton: {
     marginBottom: 16,
@@ -27,7 +27,7 @@ class SendSms extends Component {
   render() {
     const selectItemStyle = {
       'whiteSpace': 'preWrap'
-    }    
+    }
     return (
       <div>
         <h3>Send SMS</h3>

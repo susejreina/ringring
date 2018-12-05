@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import { PostData } from '../../services/PostData';
+import {Redirect} from 'react-router-dom';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SidebarMenuRouters from '../../routers/routers.js';
 import Header from '../../containers/header.js';
@@ -21,61 +24,122 @@ const muiTheme = getMuiTheme({
 });
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      username: '',
-      password: ''};
+      data:[],
+      /* name: '',
+      pass: '',
+      lastname: '',
+      email: '',
+      status: '',
+      type: '',
+      redirect: false */
+    };
+
+    // this.signIn = this.signIn.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  handleUsername (e){
-        this.setState({username: e.target.value});
+  componentDidMount() {
+    fetch('http://localhost:3001/api/users',{
+      mode: 'no-cors',
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+            email: "hugh.daniel@gmail.com",
+            name: "Hugh Daniel",
+            password: "1234"
+        })
+    }).
+    then((Response)=>Response.json()).
+    then((findresponse)=>{
+      console.log(findresponse);
+    })
+    /*fetch('http://localhost:3001/api/users')
+     .then(results => {
+       return results.json();
+     })
+     .then((data) => {
+        this.setState({name: name});
+        console.log("state", this.state.name);
+      });*/
+
+    /* fetch('http://localhost:3001/api/users',{
+      method: 'POST',
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => {return response.json()})
+    .then(data => this.setState({ data }))
+    .catch(function(error) {
+        console.log(error);
+    }); */
   }
 
-  handlePassword (e){
-        this.setState({password: e.target.value});
-  }  
+  /* signIn() {
+    if(this.state.name && this.state.pass) {
+      PostData('users', this.state).then((result) => {
+        let responseJson = result;
+        if(responseJson.userData){
+          sessionStorage.setItem('userData', responseJson);
+          this.setState({redirect: true})
+        }
+        else{
+          console.log('Login error');
+        }
+      });
+    }
+  } */
 
-  login (e){
-      e.preventDefault();
-      ReactDOM.render(
-        <div>
-          <MuiThemeProvider muiTheme={muiTheme}>
-          <div>
-            <Header />
-            <SidebarMenuRouters />
-          </div>
-          </MuiThemeProvider>
-        </div>,
-        document.getElementById('root')
-      );
-  }  
+  onChange(e) {
+    this.setState({[e.target.name]: e.target.value})
+  }
 
   render() {
+    if(this.state.redirect){
+      return (<Redirect to={'/home'} />)
+    }
+
     return (
     <div>
       <div className="login-wrapper">
         <div className="login-fields">
           <h3>Login</h3>
-          <TextField
-            id="name"
-            floatingLabelText="Usernae or Email"
-            fullWidth={true}
-            onChange={this.handleUsername.bind(this)}
-          />
-          <TextField
-            id="pass"
-            floatingLabelText="Password"
-            fullWidth={true}
-            onChange={this.handlePassword.bind(this)}
-          />
-          <div className="pt20">
-            <RaisedButton 
-            label="Log In" 
-            primary={true} 
-            fullWidth={true}
-            onClick={this.login.bind(this)}/>
-          </div>
+
+            <div>
+              <TextField
+                name="name"
+                floatingLabelText="Username or Email"
+                fullWidth={true}
+                required={true}
+                onChange={this.onChange}
+              />
+            </div>
+            <div>
+              <TextField
+                name="pass"
+                floatingLabelText="Password"
+                fullWidth={true}
+                required={true}
+                type="password"
+                onChange={this.onChange}
+              />
+            </div>
+            <div className="pt20">
+              <RaisedButton
+              label="Log In"
+              primary={true}
+              fullWidth={true}
+              onClick={this.signIn}
+            />
+            </div>
 
         </div>
       </div>
