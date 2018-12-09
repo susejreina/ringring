@@ -7,7 +7,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import { PostData } from '../../services/PostData';
-// import Dids from './Dids';
+import Dids from './Did';
 
 const style = {
   backgroundImage: 'url('+ imageUrl + ')',
@@ -37,12 +37,24 @@ class ClientUsers extends Component {
       key: '',
       did: '',
       showdata : this.displayData,
-      displayData: []
+      displayData: [
+        {id: 1, body: "prueba 1"},
+        {id: 2, body: "prueba 2"},
+        {id: 3, body: "prueba 3"},
+      ]
     }
 
     this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.appendData = this.appendData.bind(this);
+  }
+
+  handleDelete = (index) => {
+    const copyDisplayData = Object.assign([], this.state.displayData);
+    copyDisplayData.splice(index, 1);
+    this.setState({
+      displayData: copyDisplayData
+    })
   }
 
   onChange(e) {
@@ -262,10 +274,20 @@ class ClientUsers extends Component {
                     <ContentAdd />
                   </FloatingActionButton>
                 </div>
-                <div>
-                  <table id="DIDlist" width="100px" align="center" border="1">
+                <div className="offset-md-3 col-md-7">
+                  <table id="DIDlist" width="200px" border="1">
                     <tbody>
-                      
+                      {
+                        this.state.displayData.map((post, index) => {
+                          return(
+                            <Dids
+                              id={post.id}
+                              body={post.body}
+                              delete={this.handleDelete.bind(this, index)}
+                            />
+                          )
+                        })
+                      }
                     </tbody>
                   </table>
                 </div>
