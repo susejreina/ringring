@@ -18,7 +18,7 @@ class RoutesList extends Component {
       <div className="sidebar-nav">
         <ul>
           <li>
-            <Link to="/"><span className="material-icons">apidazze</span>Apidaze</Link>
+            <Link to="/"><span className="material-icons">apidaze</span>Apidaze</Link>
           </li>
 
           <li className="divider"></li>
@@ -32,9 +32,11 @@ class RoutesList extends Component {
           <li className="has-child">
             <a href=""><span className="material-icons">equalizer</span>User Administrador</a>
             <ul className="child-menu">
-              <li><Link to="/pages/masterUser">Master User</Link></li>
+              <li><Link to="/table/masterUser">Master User</Link></li>
               <li><Link to="/pages/client">Clients</Link></li>
               <li><Link to="/pages/operators">Operators</Link></li>
+
+
             </ul>
           </li>
         </ul>
@@ -43,5 +45,9 @@ class RoutesList extends Component {
     );
   }
 }
+
+/*  <li><Link to="/pages/masterUser">Master User</Link></li>
+<li><Link to="/pages/client">Clients</Link></li>
+<li><Link to="/pages/operators">Operators</Link></li>  */
 
 export default RoutesList;

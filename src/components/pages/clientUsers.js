@@ -2,39 +2,86 @@ import React, {Component} from 'react';
 import imageUrl from '../../img/banner.jpg';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import { PostData } from '../../services/PostData';
+import Dids from './Dids';
 
 const style = {
   backgroundImage: 'url('+ imageUrl + ')',
   backgroundSize: 'cover',
   backgroundPosition: 'center center',
 }
+
 const styles = {
   radioButton: {
     marginBottom: 16,
   },
 };
 class ClientUsers extends Component {
-  state = {
-    value: 1,
-  };
+  constructor() {
+    super();
+    // this.displayData = [];
 
-  handleChange = (event, index, value) => this.setState({value});
+    this.state = {
+      name: '',
+      contactname: '',
+      contactlastname: '',
+      contactphone: '',
+      email: '',
+      pass: '',
+      status: '',
+      secret: '',
+      key: '',
+      did: '',
+      showdata : this.displayData,
+      displayData: []
+    }
+
+    this.onChange = this.onChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.appendData = this.appendData.bind(this);
+  }
+
+  onChange(e) {
+    //console.log(e.target.name+':'+e.target.value);
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  appendData() {
+     this.displayData.push(<tr><td>{this.state.did}</td></tr>);
+     this.setState({
+        showdata : this.displayData,
+        did : '',
+     });
+  }
+
+  handleSubmit(event) {
+    // console.log(this.state);
+    event.preventDefault();
+
+    PostData('client', this.state).then((result) => {
+      let responseJson = result;
+
+      if(responseJson.rows){
+        //console.log(responseJson.rows);
+        //sessionStorage.setItem('rows', responseJson);
+        //this.setState({redirect: true})
+      }
+      else{
+        console.log('Login error');
+      }
+    });
+  }
 
   render() {
-    const selectItemStyle = {
-      'whiteSpace': 'preWrap'
-    }
     return (
       <div>
-        <h3>Clients</h3>
+        <h3>Client</h3>
         <br />
-        <form className="readmin-form">
+        <form className="readmin-form" name="clientForm" onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col-sm-12 offset-md-2 col-md-7">
               <div className="row align-items-center">
@@ -43,8 +90,12 @@ class ClientUsers extends Component {
                 </div>
                 <div className="col-md-8">
                   <TextField
-                    id="company"
+                    id="name"
+                    name="name"
+                    required={true}
                     fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
                   />
                 </div>
               </div>
@@ -56,8 +107,12 @@ class ClientUsers extends Component {
                 </div>
                 <div className="col-md-8">
                   <TextField
-                    id="name"
+                    id="contactname"
+                    name="contactname"
+                    required={true}
                     fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
                   />
                 </div>
               </div>
@@ -69,8 +124,12 @@ class ClientUsers extends Component {
                 </div>
                 <div className="col-md-8">
                   <TextField
-                    id="last_name"
+                    id="contactlastname"
+                    name="contactlastname"
+                    required={true}
                     fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
                   />
                 </div>
               </div>
@@ -82,8 +141,12 @@ class ClientUsers extends Component {
                 </div>
                 <div className="col-md-8">
                   <TextField
-                    id="phone"
+                    id="contactphone"
+                    name="contactphone"
+                    required={true}
                     fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
                   />
                 </div>
               </div>
@@ -95,9 +158,13 @@ class ClientUsers extends Component {
                 </div>
                 <div className="col-md-8">
                   <TextField
-                    id="add_email"
+                    id="email"
+                    name="email"
                     type="email"
+                    required={true}
                     fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
                   />
                 </div>
               </div>
@@ -109,9 +176,13 @@ class ClientUsers extends Component {
                 </div>
                 <div className="col-md-8">
                   <TextField
-                    id="password"
-                    type="password"
+                    id="pass"
+                    name="pass"
+                    type="pass"
+                    required={true}
                     fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
                   />
                 </div>
               </div>
@@ -122,14 +193,15 @@ class ClientUsers extends Component {
                   <label>Status</label>
                 </div>
                 <div className="col-md-8">
-                  <RadioButtonGroup name="shipSpeed" labelPosition="right" defaultSelected="not_light">
+                  <RadioButtonGroup style={{ display: 'flex' }} name="status" id="status"
+                   labelPosition="right" defaultSelected="true" onChange={this.onChange}>
                     <RadioButton
-                      value="not_light"
+                      value="true"
                       label="Active"
                       style={styles.radioButton}
                     />
                     <RadioButton
-                      value="light"
+                      value="false"
                       label="Inactive"
                       style={styles.radioButton}
                     />
@@ -140,12 +212,33 @@ class ClientUsers extends Component {
             <div className="col-sm-12 offset-md-2 col-md-7">
               <div className="row align-items-center">
                 <div className="col-md-3">
-                  <label>API SECRET</label>
+                  <label>API secret</label>
                 </div>
                 <div className="col-md-8">
                   <TextField
-                    id="api_secret"
+                    id="secret"
+                    name="secret"
+                    required={true}
                     fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-12 offset-md-2 col-md-7">
+              <div className="row align-items-center">
+                <div className="col-md-3">
+                  <label>API Key</label>
+                </div>
+                <div className="col-md-8">
+                  <TextField
+                    id="key"
+                    name="key"
+                    required={true}
+                    fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
                   />
                 </div>
               </div>
@@ -157,14 +250,28 @@ class ClientUsers extends Component {
                 </div>
                 <div className="col-md-8">
                   <TextField
-                    id="numbers_did"
+                    id="did"
+                    name="did"
                     fullWidth={true}
+                    autoComplete='off'
+                    onChange={this.onChange}
                   />
                 </div>
                 <div className="col-md-1">
-                  <FloatingActionButton mini={true} style={style}>
+                  <FloatingActionButton mini={true} style={style} onClick={this.appendData}>
                     <ContentAdd />
                   </FloatingActionButton>
+                </div>
+                <div>
+                  <table id="DIDlist" width="100px" align="center" border="1">
+                    <tbody>
+                      {
+                        this.state.displayData.map((post, index) => {
+
+                        })
+                      }
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -172,7 +279,7 @@ class ClientUsers extends Component {
               <div className="row">
                 <div className="col-md-3"></div>
                 <div className="col-md-8">
-                  <RaisedButton primary={true} fullWidth={true} label="Save" />
+                  <RaisedButton primary={true} type="submit" fullWidth={true} label="Save" />
                 </div>
               </div>
             </div>

@@ -14,6 +14,7 @@ import RoutesComponent from './routesComponent.js';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Footer from '../components/footer.js';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Header from '../containers/header.js';
 
 class SidebarMenuRouters extends Component {
   constructor () {
@@ -95,6 +96,7 @@ class SidebarMenuRouters extends Component {
     return (
       <Router>
         <div>
+          <Header />
           <div className="readmin-sidebar">
             <HeaderLogoWithMenu />
             <Drawer open={this.state.menuOpen}

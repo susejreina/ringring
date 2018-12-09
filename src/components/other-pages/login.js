@@ -1,94 +1,35 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { PostData } from '../../services/PostData';
-import {Redirect} from 'react-router-dom';
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import SidebarMenuRouters from '../../routers/routers.js';
-import Header from '../../containers/header.js';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import '../../static/css/App.css';
 import '../../static/css/vendor-styles.css';
 
 import "react-table/react-table.css";
 
-const muiTheme = getMuiTheme({
-  palette: {
-    primary1Color: '#258df2',
-    accent1Color: '#40c741',
-  }
-});
+import HomePage from '../../pages/home.js';
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      data:[],
-      /* name: '',
-      pass: '',
-      lastname: '',
       email: '',
-      status: '',
-      type: '',
-      redirect: false */
+      pass: '',
+      redirect: false
     };
 
-    // this.signIn = this.signIn.bind(this);
+    this.signIn = this.signIn.bind(this);
     this.onChange = this.onChange.bind(this);
   }
-
-  componentDidMount() {
-    fetch('http://localhost:3001/api/users',{
-      mode: 'no-cors',
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-            email: "hugh.daniel@gmail.com",
-            name: "Hugh Daniel",
-            password: "1234"
-        })
-    }).
-    then((Response)=>Response.json()).
-    then((findresponse)=>{
-      console.log(findresponse);
-    })
-    /*fetch('http://localhost:3001/api/users')
-     .then(results => {
-       return results.json();
-     })
-     .then((data) => {
-        this.setState({name: name});
-        console.log("state", this.state.name);
-      });*/
-
-    /* fetch('http://localhost:3001/api/users',{
-      method: 'POST',
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-    .then(response => {return response.json()})
-    .then(data => this.setState({ data }))
-    .catch(function(error) {
-        console.log(error);
-    }); */
-  }
-
-  /* signIn() {
-    if(this.state.name && this.state.pass) {
-      PostData('users', this.state).then((result) => {
+   signIn() {
+    if(this.state.email && this.state.pass) {
+      PostData('login', this.state).then((result) => {
         let responseJson = result;
-        if(responseJson.userData){
-          sessionStorage.setItem('userData', responseJson);
+
+        if(responseJson.user){
+          sessionStorage.setItem('user', responseJson);
           this.setState({redirect: true})
         }
         else{
@@ -96,7 +37,7 @@ class Login extends Component {
         }
       });
     }
-  } */
+  }
 
   onChange(e) {
     this.setState({[e.target.name]: e.target.value})
@@ -104,7 +45,11 @@ class Login extends Component {
 
   render() {
     if(this.state.redirect){
-      return (<Redirect to={'/home'} />)
+      return (<HomePage />)
+    }
+
+    if(sessionStorage.getItem('user')){
+      return (<HomePage />)
     }
 
     return (
@@ -115,7 +60,8 @@ class Login extends Component {
 
             <div>
               <TextField
-                name="name"
+                name="email"
+                id="email"
                 floatingLabelText="Username or Email"
                 fullWidth={true}
                 required={true}
@@ -125,6 +71,7 @@ class Login extends Component {
             <div>
               <TextField
                 name="pass"
+                id="pass"
                 floatingLabelText="Password"
                 fullWidth={true}
                 required={true}

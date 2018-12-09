@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import SidebarMenuRouters from './routers/routers.js';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import './static/css/App.css';

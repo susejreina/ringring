@@ -6,7 +6,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import '../../static/css/App.css';
 import '../../static/css/vendor-styles.css';
 
-import Header from '../../containers/header.js';
+// import Header from '../../containers/header.js';
+// import { Redirect } from 'react-router-dom';
 
 import "react-table/react-table.css";
 
@@ -18,12 +19,12 @@ const muiTheme = getMuiTheme({
 });
 
 class App extends Component {
+
   render() {
     return (
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <div>
-            <Header />
             <SidebarMenuRouters />
           </div>
         </MuiThemeProvider>
