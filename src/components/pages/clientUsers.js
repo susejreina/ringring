@@ -24,7 +24,7 @@ class ClientUsers extends Component {
   constructor() {
     super();
     // this.displayData = [];
-
+    this.didId = 0;
     this.state = {
       name: '',
       contactname: '',
@@ -37,11 +37,7 @@ class ClientUsers extends Component {
       key: '',
       did: '',
       showdata : this.displayData,
-      displayData: [
-        {id: 1, body: "prueba 1"},
-        {id: 2, body: "prueba 2"},
-        {id: 3, body: "prueba 3"},
-      ]
+      displayData: []
     }
 
     this.onChange = this.onChange.bind(this);
@@ -281,6 +277,7 @@ class ClientUsers extends Component {
                         this.state.displayData.map((post, index) => {
                           return(
                             <Dids
+                              key = {post.id}
                               id={post.id}
                               body={post.body}
                               delete={this.handleDelete.bind(this, index)}
