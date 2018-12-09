@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
-import imageUrl from '../../img/banner.jpg';
+// import imageUrl from '../../img/banner.jpg';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+// import SelectField from 'material-ui/SelectField';
+// import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
 
-const style = {
+/* const style = {
   backgroundImage: 'url('+ imageUrl + ')',
   backgroundSize: 'cover',
   backgroundPosition: 'center center',
-}
+} */
+
 const styles = {
   radioButton: {
     marginBottom: 16,
@@ -25,9 +26,6 @@ class MasterUsers extends Component {
   handleChange = (event, index, value) => this.setState({value});
 
   render() {
-    const selectItemStyle = {
-      'whiteSpace': 'preWrap'
-    }
     return (
       <div>
         <h3>Master User</h3>
