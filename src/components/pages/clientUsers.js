@@ -7,7 +7,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import { PostData } from '../../services/PostData';
-import Dids from './Dids';
+// import Dids from './Dids';
 
 const style = {
   backgroundImage: 'url('+ imageUrl + ')',
@@ -265,11 +265,7 @@ class ClientUsers extends Component {
                 <div>
                   <table id="DIDlist" width="100px" align="center" border="1">
                     <tbody>
-                      {
-                        this.state.displayData.map((post, index) => {
-
-                        })
-                      }
+                      
                     </tbody>
                   </table>
                 </div>
